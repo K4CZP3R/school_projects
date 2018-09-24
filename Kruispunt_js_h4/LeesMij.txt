@@ -1,0 +1,4 @@
+Kruispunt
+Gemaakt door Kacper Serewis uit H4C, 2018 @Mondriaan
+
+Het is mogelijk om paar vars te veranderen voor extra info (er wordt ook console.log gebruikt [F12])
