@@ -10,7 +10,7 @@ private:
 	sf::Vector2f carLocations[4] = {sf::Vector2f(525,0), sf::Vector2f(1200, 225), sf::Vector2f(625, 1200/2), sf::Vector2f(0,325 )};
 	size_t carLocationsLen = sizeof(carLocations) / sizeof(carLocations[0]);
 	
-	sf::Vector2f carSize[4] = { sf::Vector2f(50,50), sf::Vector2f(50,50), sf::Vector2f(50,50),sf::Vector2f(50,50) };
+	sf::Vector2f carSize[4] = { sf::Vector2f(50,70), sf::Vector2f(70,50), sf::Vector2f(50,70),sf::Vector2f(70,50) };
 	size_t carSizeLen = sizeof(carSize) / sizeof(carSize[0]);
 	
 	std::string carNames[4] = { "up", "right", "down", "left" };
@@ -62,4 +62,5 @@ public:
 	void second_brake(float dt);
 	void second_moveCar(float dt);
 	void second_PerformLogic(int lightsState[4],float dt);
+
 };
