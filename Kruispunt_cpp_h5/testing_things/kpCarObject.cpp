@@ -34,8 +34,21 @@ void kpCarObject::initCar(int _windowWidth, int _windowHeight, int startDirectio
 	carShape.setPosition(position);
 	carShape.setSize(carSize[startDirection]);
 
-}
+	//Beta, reint
+	currentSpeed = 0.f;
+	rotation = 0.f;
+	carShape.setRotation(0.f);
+	movementVector = sf::Vector2f(0.f, 0.f);
+	forwardVec = sf::Vector2f(0.f, 0.f);
+	carEvent_StoppedBeforeIntersection = false;
+	carEvent_IsAllowedByLights = false;
+	carEvent_DoesCareAboutLights = true;
 
+
+}
+sf::Vector2f kpCarObject::getCoords() {
+	return carShape.getPosition();
+}
 sf::FloatRect kpCarObject::getPosition() {
 	return carShape.getGlobalBounds();
 }
@@ -102,8 +115,8 @@ void kpCarObject::moveCar() {
 		}
 	}
 }
-void kpCarObject::second_PerformLogic(int lightsState[4], float dt) {
-	_kpDebug.sendMessage(std::to_string(carShape.getRotation()));
+void kpCarObject::second_PerformLogic(int carWaiting[4][3], int lightsState[4], float dt) {
+	//_kpDebug.sendMessage(std::to_string(carShape.getRotation()));
 	
 	position = carShape.getPosition();
 	rotation = carShape.getRotation();
@@ -161,13 +174,31 @@ void kpCarObject::second_PerformLogic(int lightsState[4], float dt) {
 		}
 	}
 	if (carStartDirection == 0) {
-		//Go to the rand and stop
-		float posy_stopAccelerate = 120.f;
-		float posy_startBrake = 120.f;
-		if (position.y < 120.f) {
+		float posy_stopAccelerate, posy_startBrake;
+		if (carWaiting[carStartDirection][0] == 0) {
+			//Go to the rand and stop
+			posy_stopAccelerate = 120.f;
+			posy_startBrake = 120.f;
+			carWaiting[carStartDirection][0] = 1;
+			carStoppedAt = 0;
+		}
+		else if (carWaiting[carStartDirection][1] == 0) {
+			posy_stopAccelerate = 100.f;
+			posy_startBrake = 100.f;
+			carWaiting[carStartDirection][1] = 1;
+			carStoppedAt = 1;
+		}
+		else if (carWaiting[carStartDirection][2] == 0) {
+			posy_stopAccelerate = 80.f;
+			posy_startBrake = 80.f;
+			carWaiting[carStartDirection][2] = 1;
+			carStoppedAt = 2;
+		}
+		
+		if (position.y < posy_stopAccelerate) {
 			second_goForward(dt);
 		}
-		if (position.y > 120.f && currentSpeed != 0.f && !carEvent_StoppedBeforeIntersection) {
+		if (position.y > posy_startBrake && currentSpeed != 0.f && !carEvent_StoppedBeforeIntersection) {
 			second_brake(dt);
 		}
 		if (currentSpeed == 0.f) {
@@ -183,6 +214,7 @@ void kpCarObject::second_PerformLogic(int lightsState[4], float dt) {
 				}
 			}
 			if (carEvent_IsAllowedByLights) {
+				carWaiting[carStartDirection][carStoppedAt] = 0;
 				if (carEndDirection == 1) {
 					//Pas aan de volgende weg
 					if (position.y < 245.f) {
@@ -319,6 +351,8 @@ void kpCarObject::second_PerformLogic(int lightsState[4], float dt) {
 		}
 	}
 
+
+
 }
 void kpCarObject::second_setSmoothRotation(int direction, int rotateType,float dt) {
 	if (direction == 1) {
@@ -332,10 +366,11 @@ void kpCarObject::second_goForward(float dt) {
 	if (currentSpeed < maxSpeed) {
 		currentSpeed += acceleration * dt;
 	}
-
+	
 	sf::Transform t;
 	t.rotate(carShape.getRotation());
-	movementVector = t.transformPoint(forwardVecs[carStartDirection]);
+	forwardVec = forwardVecs[carStartDirection];
+	movementVector = t.transformPoint(forwardVec);
 }
 void kpCarObject::second_brake(float dt) {
 	currentSpeed -= deceleration * dt;

@@ -32,18 +32,22 @@ private:
 
 
 	//Beta
-	float currentSpeed = 0.f;
+	float currentSpeed;
 	const float maxSpeed = 800.f;
 	const float acceleration = 60.f;
 	const float deceleration = 300.f;
 	const float rotateAmount[2] = { 110.f, 60.f };
-	sf::Vector2f movementVector; //Direction vector
 	const sf::Vector2f forwardVecs[4] = { sf::Vector2f(0.f,1.f), sf::Vector2f(-1.f,0.f), sf::Vector2f(0.f,-1.f), sf::Vector2f(1.f,0.f) };
 
-	bool carEvent_StoppedBeforeIntersection = false;
-	float rotation = 0.f;
-	bool carEvent_IsAllowedByLights = false;
-	bool carEvent_DoesCareAboutLights = true;
+	sf::Vector2f forwardVec;
+	sf::Vector2f movementVector; //Direction vector
+	bool carEvent_StoppedBeforeIntersection;
+	float rotation;
+	bool carEvent_IsAllowedByLights;
+	bool carEvent_DoesCareAboutLights;
+	int carStoppedAt;
+
+	
 
 public:
 	kpCarObject();
@@ -61,6 +65,7 @@ public:
 	void second_goForward(float dt);
 	void second_brake(float dt);
 	void second_moveCar(float dt);
-	void second_PerformLogic(int lightsState[4],float dt);
+	void second_PerformLogic(int carWaiting[4][3],int lightsState[4],float dt);
+	sf::Vector2f getCoords();
 
 };
