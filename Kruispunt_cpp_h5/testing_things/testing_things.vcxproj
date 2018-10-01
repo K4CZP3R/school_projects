@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="kpCarSystem.h" />
     <ClInclude Include="kpLightsSystem.h" />
     <ClInclude Include="kpMovementPath.h" />
     <ClInclude Include="kpTextures.h" />
@@ -169,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="kpCarObject.cpp" />
+    <ClCompile Include="kpCarSystem.cpp" />
     <ClCompile Include="kpDebug.cpp" />
     <ClCompile Include="kpHud.cpp" />
     <ClCompile Include="kpLightsObject.cpp" />

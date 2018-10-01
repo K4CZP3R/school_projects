@@ -41,6 +41,6 @@ sf::Text kpHud::getMouseHud() {
 	text.setString(mouseHudContent);
 	text.setCharacterSize(mouseHudFontSize);
 	text.setFillColor(mouseHudFontColor);
-	text.setPosition(mouseHudPos.x, mouseHudPos.y);
+	text.setPosition(0.f + mouseHudPos.x, 0.f + mouseHudPos.y);
 	return text;
 }

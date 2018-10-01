@@ -15,7 +15,7 @@ kpLightsSystem::kpLightsSystem(sf::Texture text_default, sf::Texture text_red, s
 	for (i = 0; i < 4; i++) {
 		lightSprites[i].setTexture(lightTextures[i]);
 		lightSprites[i].setPosition(lightLocations[i]);
-		
+		lightSprites[i].setRotation(lightRotation[i]);
 		lightSprites[i].setScale(0.5, 0.5);
 	}
 	l1 = 3;

@@ -80,7 +80,6 @@ void kpCarObject::moveCar() {
 			if (position.y >= 375.0) {
 				carShape.setRotation(270.f);
 				carRotation = 0.f;
-				_kpDebug.sendMessage(std::to_string(carShape.getRotation()));
 				position.x += 1.0f;
 			}
 		}
@@ -116,8 +115,7 @@ void kpCarObject::moveCar() {
 	}
 }
 void kpCarObject::second_PerformLogic(int carWaiting[4][3], int lightsState[4], float dt) {
-	//_kpDebug.sendMessage(std::to_string(carShape.getRotation()));
-	
+
 	position = carShape.getPosition();
 	rotation = carShape.getRotation();
 
@@ -382,13 +380,10 @@ void kpCarObject::second_moveCar(float dt) {
 	carShape.move(movementVector*currentSpeed*dt);
 	position = carShape.getPosition();
 }
-
-
 void kpCarObject::update() {
 
 	carShape.setPosition(position);
 }
-
 sf::Text kpCarObject::getDrawInformation() {
 	sf::Text text;
 	text.setFont(infoFont);
@@ -398,8 +393,6 @@ sf::Text kpCarObject::getDrawInformation() {
 	text.setPosition(position);
 	return text;
 }
-
-
 void kpCarObject::captureMovement() {
 	captureN += 1;
 	if (captureI > 64) {
@@ -411,7 +404,6 @@ void kpCarObject::captureMovement() {
 		captureI += 1;
 	}
 }
-
 sf::RectangleShape kpCarObject::drawMovement(int n) {
 	sf::RectangleShape shape;
 	shape.setSize(sf::Vector2f(5, 5));
