@@ -8,3 +8,7 @@
 *.idb
 
 *.log
+
+Kruispunt_cpp_h5/Debug/
+
+Kruispunt_cpp_h5/Release/
